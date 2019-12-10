@@ -24,33 +24,19 @@ matrix:
         - php: 7.2
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=pgsql DB_DATABASE=test DB_USERNAME=postgres DB_PASSWORD=
         - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql MYSQL=8 DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
+          env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
         - php: 7.2
           env: DB_CONNECTION=sqlsrv DB_DATABASE=test DB_USERNAME=sa DB_PASSWORD="Password!"
         - php: 7.3
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=pgsql DB_DATABASE=test DB_USERNAME=postgres DB_PASSWORD=
         - php: 7.3
-          env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql MYSQL=8 DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
+          env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
         - php: 7.3
           env: DB_CONNECTION=sqlsrv DB_DATABASE=test DB_USERNAME=sa DB_PASSWORD="Password!"
     allow_failures:
         - php: 7.4snapshot
 
 before_install:
-    - |
-        if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-          phpenv config-rm xdebug.ini
-        else
-          echo "xdebug.ini does not exist"
-        fi
-    - |
-        if [ $MYSQL == "8" ]; then
-          wget https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
-          sudo dpkg -i mysql-apt-config_0.8.13-1_all.deb
-          sudo apt-get update
-          sudo apt-get install -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
-          sudo systemctl restart mysql
-        fi
     - mysql -e 'CREATE DATABASE test;'
     - psql -c 'create database test;' -U postgres
     - |
