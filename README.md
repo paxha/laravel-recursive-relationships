@@ -1,2 +1,2 @@
-# laravel-recursive-relationships
- Laravel recursive relationships
+# laravel-recursive-relationship
+ Laravel recursive relationship
