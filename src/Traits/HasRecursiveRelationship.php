@@ -14,7 +14,7 @@ trait HasRecursiveRelationship
 
     public function children()
     {
-        return $this->/** @scrutinizer ignore-call */ hasMany(self::class, $this->getParentKeyName());
+        return $this->/* @scrutinizer ignore-call */ hasMany(self::class, $this->getParentKeyName());
     }
 
     public function descendants()
