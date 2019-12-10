@@ -11,7 +11,7 @@ class User extends Model
     use SoftDeletes, HasRecursiveRelationship;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     public function getParentKeyName()
