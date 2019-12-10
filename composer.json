@@ -1,0 +1,44 @@
+{
+    "name": "paxha/laravel-recursive-relationships",
+    "description": "Laravel recursive relationships",
+    "type": "laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hassan Raza Pasha",
+            "email": "e.hassanrazapasha@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.4",
+        "phpunit/phpunit": "^8.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RecursiveRelationship\\RecursiveRelationshipProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "RecursiveRelationship\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RecursiveRelationship\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

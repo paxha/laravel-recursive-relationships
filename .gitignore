@@ -9,3 +9,4 @@ package-lock.json
 yarn.lock
 composer.lock
 .phpunit.result.cache
+/vendor/
