@@ -42,6 +42,7 @@ trait HasRecursiveRelationship
         $keys = (new self())->newQuery()
             ->select($this->getParentKeyName())
             ->hasParent();
+
         return $query->whereIn($this->getKeyName(), $keys);
     }
 
@@ -55,6 +56,7 @@ trait HasRecursiveRelationship
         $keys = (new self())->newQuery()
             ->select($this->getParentKeyName())
             ->hasParent();
+
         return $query->whereNotIn($this->getKeyName(), $keys);
     }
 
