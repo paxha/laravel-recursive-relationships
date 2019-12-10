@@ -24,22 +24,22 @@ trait HasRecursiveRelationship
 
     public function parent()
     {
-        return $this->/** @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName());
+        return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName());
     }
 
     public function ancestor()
     {
-        return $this->/** @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('ancestor');
+        return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('ancestor');
     }
 
     public function siblings()
     {
-        return new HasManySiblings((new self())->/** @scrutinizer ignore-call */ newQuery(), /** @scrutinizer ignore-call */ $this, $this->getParentKeyName(), $this->/** @scrutinizer ignore-call */ getKeyName());
+        return new HasManySiblings((new self())->/* @scrutinizer ignore-call */ newQuery(), /* @scrutinizer ignore-type */ $this, $this->getParentKeyName(), $this->/* @scrutinizer ignore-call */ getKeyName());
     }
 
     public function scopeHasChildren(Builder $query)
     {
-        $keys = (new self())->newQuery()
+        $keys = (new self())->/* @scrutinizer ignore-call */ newQuery()
             ->select($this->getParentKeyName())
             ->hasParent();
 
@@ -53,7 +53,7 @@ trait HasRecursiveRelationship
 
     public function scopeLeaf(Builder $query)
     {
-        $keys = (new self())->newQuery()
+        $keys = (new self())->/* @scrutinizer ignore-call */ newQuery()
             ->select($this->getParentKeyName())
             ->hasParent();
 
