@@ -1,6 +1,6 @@
 {
-    "name": "paxha/laravel-recursive-relationships",
-    "description": "Laravel recursive relationships",
+    "name": "paxha/laravel-recursive-relationship",
+    "description": "Laravel recursive relationship",
     "type": "laravel",
     "license": "MIT",
     "authors": [
