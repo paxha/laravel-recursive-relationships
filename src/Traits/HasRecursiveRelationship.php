@@ -14,7 +14,7 @@ trait HasRecursiveRelationship
 
     public function children()
     {
-        return $this->hasMany(self::class, $this->getParentKeyName());
+        return $this->/** @scrutinizer ignore-call */ hasMany(self::class, $this->getParentKeyName());
     }
 
     public function descendants()
@@ -24,17 +24,17 @@ trait HasRecursiveRelationship
 
     public function parent()
     {
-        return $this->belongsTo(self::class, $this->getParentKeyName());
+        return $this->/** @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName());
     }
 
     public function ancestor()
     {
-        return $this->belongsTo(self::class, $this->getParentKeyName())->with('ancestor');
+        return $this->/** @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('ancestor');
     }
 
     public function siblings()
     {
-        return new HasManySiblings((new self())->newQuery(), $this, $this->getParentKeyName(), $this->getKeyName());
+        return new HasManySiblings((new self())->/** @scrutinizer ignore-call */ newQuery(), /** @scrutinizer ignore-call */ $this, $this->getParentKeyName(), $this->/** @scrutinizer ignore-call */ getKeyName());
     }
 
     public function scopeHasChildren(Builder $query)
