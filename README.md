@@ -86,8 +86,8 @@ The trait provides query scopes to filter models by their position in the tree:
 
 -   `hasChildren()`: Models with children.
 -   `hasParent()`: Models with a parent.
--   `isLeaf()`: Models without children.
--   `isRoot()`: Models without a parent.
+-   `leaf()`: Models without children.
+-   `root()`: Models without a parent.
 
 ```php
 $noLeaves = User::hasChildren()->get();
