@@ -1,6 +1,6 @@
 <?php
 
-namespace RecursiveRelationship\Relations;
+namespace RecursiveRelationships\Relations;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 

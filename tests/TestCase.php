@@ -1,9 +1,9 @@
 <?php
 
-namespace RecursiveRelationship\Tests;
+namespace RecursiveRelationships\Tests;
 
 use Faker\Factory as Faker;
-use RecursiveRelationship\Tests\Models\User;
+use RecursiveRelationships\Tests\Models\User;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {

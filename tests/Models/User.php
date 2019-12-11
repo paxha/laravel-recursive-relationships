@@ -1,14 +1,14 @@
 <?php
 
-namespace RecursiveRelationship\Tests\Models;
+namespace RecursiveRelationships\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use RecursiveRelationship\Traits\HasRecursiveRelationship;
+use RecursiveRelationships\Traits\HasRecursiveRelationships;
 
 class User extends Model
 {
-    use SoftDeletes, HasRecursiveRelationship;
+    use SoftDeletes, HasRecursiveRelationships;
 
     protected $fillable = [
         'name',

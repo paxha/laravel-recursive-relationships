@@ -1,6 +1,6 @@
 {
-    "name": "paxha/laravel-recursive-relationship",
-    "description": "Laravel recursive relationship",
+    "name": "paxha/laravel-recursive-relationships",
+    "description": "Laravel recursive relationships",
     "type": "laravel",
     "license": "MIT",
     "authors": [
@@ -16,25 +16,15 @@
         "orchestra/testbench": "^4.4",
         "phpunit/phpunit": "^8.0"
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "RecursiveRelationship\\RecursiveRelationshipProvider"
-            ]
-        }
-    },
     "autoload": {
         "psr-4": {
-            "RecursiveRelationship\\": "src/"
+            "RecursiveRelationships\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RecursiveRelationship\\Tests\\": "tests/"
+            "RecursiveRelationships\\Tests\\": "tests/"
         }
-    },
-    "scripts": {
-        "test": "phpunit"
     },
     "config": {
         "sort-packages": true

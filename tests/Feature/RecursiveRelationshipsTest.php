@@ -1,11 +1,11 @@
 <?php
 
-namespace RecursiveRelationship\Tests\Feature;
+namespace RecursiveRelationships\Tests\Feature;
 
-use RecursiveRelationship\Tests\Models\User;
-use RecursiveRelationship\Tests\TestCase;
+use RecursiveRelationships\Tests\Models\User;
+use RecursiveRelationships\Tests\TestCase;
 
-class RecursiveRelationshipTest extends TestCase
+class RecursiveRelationshipsTest extends TestCase
 {
     public function testChildren()
     {

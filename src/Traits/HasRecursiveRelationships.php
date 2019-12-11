@@ -1,11 +1,11 @@
 <?php
 
-namespace RecursiveRelationship\Traits;
+namespace RecursiveRelationships\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use RecursiveRelationship\Relations\HasManySiblings;
+use RecursiveRelationships\Relations\HasManySiblings;
 
-trait HasRecursiveRelationship
+trait HasRecursiveRelationships
 {
     public function getParentKeyName()
     {
