@@ -11,7 +11,7 @@ This Laravel Eloquent extension provides recursive relationships using common ta
 
 ## Installation
 
-    composer require paxha/laravel-recursive-relationship
+    composer require paxha/laravel-recursive-relationships
 
 ## Usage
 
