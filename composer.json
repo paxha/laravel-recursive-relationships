@@ -1,8 +1,14 @@
 {
     "name": "paxha/laravel-recursive-relationships",
-    "description": "Laravel recursive relationships",
+    "description": "This Laravel Eloquent extension provides recursive relationships using common table.",
     "type": "laravel",
     "license": "MIT",
+    "keywords": [
+        "laravel library",
+        "laravel recursive relationships",
+        "recursive relationships",
+        "parent child relations"
+    ],
     "authors": [
         {
             "name": "Hassan Raza Pasha",
