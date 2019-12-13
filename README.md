@@ -17,7 +17,7 @@ This Laravel Eloquent extension provides recursive relationships using common ta
 
 -   [Getting Started](#getting-started)
 -   [Relationships](#relationships)
--   [Filters](#filters)
+-   [Scopes](#scopes)
 
 ### Getting Started
 
@@ -57,30 +57,13 @@ class User extends Model
 
 The trait provides various relationships:
 
--   `ancestors()`: The model's recursive parents.
+-   `ancestor()`: The model's recursive parents (nested objects).
 -   `children()`: The model's direct children.
--   `descendants()`: The model's recursive children.
+-   `descendants()`: The model's recursive children (nested arrays).
 -   `parent()`: The model's direct parent.
 -   `siblings()`: The parent's other children.
 
-```php
-$ancestors = User::find($id)->ancestors;
-
-$users = User::with('descendants')->get();
-
-$users = User::whereHas('siblings', function ($query) {
-    $query->where('name', '=', $name);
-})->get();
-
-$total = User::find($id)->descendants()->count();
-
-User::find($id)->descendants()->update(['active' => false]);
-
-/*Root parents will not get siblings*/
-User::find($id)->siblings()->delete();
-```
-
-### Filters
+### Scopes
 
 The trait provides query scopes to filter models by their position in the tree:
 
