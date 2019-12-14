@@ -17,9 +17,9 @@ trait HasRecursiveRelationships
         return $this->/* @scrutinizer ignore-call */ hasMany(self::class, $this->getParentKeyName());
     }
 
-    public function descendants()
+    public function nestedChildren()
     {
-        return $this->children()->with('descendants');
+        return $this->children()->with('nestedChildren');
     }
 
     public function parent()
@@ -27,9 +27,9 @@ trait HasRecursiveRelationships
         return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName());
     }
 
-    public function ancestor()
+    public function nestedParents()
     {
-        return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('ancestor');
+        return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('nestedParents');
     }
 
     public function siblings()

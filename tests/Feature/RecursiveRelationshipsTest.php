@@ -14,25 +14,6 @@ class RecursiveRelationshipsTest extends TestCase
         $this->assertGreaterThan(1, $user->children()->count());
     }
 
-    public function testDescendants()
-    {
-        $user = User::all()->first();
-        $this->assertEquals(0, $user->parent()->count());
-        if ($user->descendants()->count()) {
-            $this->testDescendantsRecursive($user->descendants);
-        }
-    }
-
-    private function testDescendantsRecursive($descendants)
-    {
-        foreach ($descendants as $descendant) {
-            $this->assertEquals(1, $descendant->parent()->count());
-            if ($descendant->descendants()->count()) {
-                $this->testDescendantsRecursive($descendant->descendants);
-            }
-        }
-    }
-
     public function testParent()
     {
         $user = User::all()->first();
@@ -42,26 +23,11 @@ class RecursiveRelationshipsTest extends TestCase
         $this->assertEquals(1, $child->parent()->count());
     }
 
-    public function testAncestor()
+    public function testAncestors()
     {
-        $user = User::with('ancestor')->where('user_id', '!=', null)->get()->last();
+        $user = User::where('user_id', '!=', null)->get()->last();
 
-        if ($user->ancestor) {
-            $this->testAncestorRecursive($user->ancestor);
-        }
-    }
-
-    private function testAncestorRecursive($ancestor)
-    {
-        if ($ancestor->parent) {
-            $this->assertEquals(1, $ancestor->parent()->count());
-        } else {
-            $this->assertEquals(0, $ancestor->parent()->count());
-        }
-
-        if ($ancestor->ancestor) {
-            $this->testAncestorRecursive($ancestor->ancestor);
-        }
+        $this->assertCount(4, $user->ancestors());
     }
 
     public function testSiblings()
