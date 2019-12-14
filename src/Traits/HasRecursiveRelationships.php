@@ -39,6 +39,7 @@ trait HasRecursiveRelationships
         if ($this->ancestor) {
             $this->collectAncestors($this->ancestor);
         }
+
         return collect($this->ancestors);
     }
 
