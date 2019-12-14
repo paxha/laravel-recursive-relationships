@@ -51,6 +51,13 @@ class RecursiveRelationshipsTest extends TestCase
         }
     }
 
+    public function testAncestors()
+    {
+        $user = User::where('user_id', '!=', null)->get()->last();
+
+        $this->assertCount(4, $user->ancestors());
+    }
+
     private function testAncestorRecursive($ancestor)
     {
         if ($ancestor->parent) {
