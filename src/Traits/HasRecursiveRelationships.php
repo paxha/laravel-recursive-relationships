@@ -7,6 +7,8 @@ use RecursiveRelationships\Relations\HasManySiblings;
 
 trait HasRecursiveRelationships
 {
+    public $ancestors = [];
+
     public function getParentKeyName()
     {
         return 'parent_id';
@@ -30,6 +32,22 @@ trait HasRecursiveRelationships
     public function ancestor()
     {
         return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('ancestor');
+    }
+
+    public function ancestors()
+    {
+        if ($this->ancestor) {
+            $this->collectAncestors($this->ancestor);
+        }
+        return collect($this->ancestors);
+    }
+
+    private function collectAncestors($ancestor)
+    {
+        $this->ancestors[] = $ancestor;
+        if ($ancestor->ancestor) {
+            $this->collectAncestors($ancestor->ancestor);
+        }
     }
 
     public function siblings()
