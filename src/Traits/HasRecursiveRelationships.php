@@ -7,7 +7,7 @@ use RecursiveRelationships\Relations\HasManySiblings;
 
 trait HasRecursiveRelationships
 {
-    private $descendents, $ancestors = [];
+    private $descendents = [], $ancestors = [];
 
     public function getParentKeyName()
     {
