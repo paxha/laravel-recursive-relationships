@@ -61,7 +61,7 @@ The trait provides various relationships:
 -   `children()`: The model's direct children.
 -   `nestedChildren()`: The model's nested children.
 -   `parent()`: The model's direct parent.
--   `nestedParent()`: The model's nested parent by object.
+-   `nestedParents()`: The model's nested parents by object.
 
 ```php
 $users = User::with('children')->get();
