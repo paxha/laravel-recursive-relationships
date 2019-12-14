@@ -36,18 +36,18 @@ trait HasRecursiveRelationships
 
     public function ancestors()
     {
-        if ($this->ancestor) {
-            $this->collectAncestors($this->ancestor);
+        if ($this->parent) {
+            $this->collectAncestors($this->parent);
         }
 
         return collect($this->ancestors);
     }
 
-    private function collectAncestors($ancestor)
+    private function collectAncestors($parent)
     {
-        $this->ancestors[] = $ancestor;
-        if ($ancestor->ancestor) {
-            $this->collectAncestors($ancestor->ancestor);
+        $this->ancestors[] = $parent;
+        if ($parent->parent) {
+            $this->collectAncestors($parent->parent);
         }
     }
 
