@@ -27,18 +27,18 @@ matrix:
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql MYSQL=8 DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
         - php: 7.2
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
+        - php: 7.2
+          env: DB_CONNECTION=sqlsrv DB_DATABASE=test DB_USERNAME=sa DB_PASSWORD="Password!"
         - php: 7.3
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=pgsql DB_DATABASE=test DB_USERNAME=postgres DB_PASSWORD=
         - php: 7.3
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql MYSQL=8 DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
         - php: 7.3
           env: COMPOSER_FLAGS="--prefer-lowest" DB_CONNECTION=mysql DB_DATABASE=test DB_USERNAME=root DB_PASSWORD=
-    allow_failures:
-        - php: 7.4snapshot
-        - php: 7.2
-          env: DB_CONNECTION=sqlsrv DB_DATABASE=test DB_USERNAME=sa DB_PASSWORD="Password!"
         - php: 7.3
           env: DB_CONNECTION=sqlsrv DB_DATABASE=test DB_USERNAME=sa DB_PASSWORD="Password!"
+    allow_failures:
+        - php: 7.4snapshot
 
 before_install:
     - |
