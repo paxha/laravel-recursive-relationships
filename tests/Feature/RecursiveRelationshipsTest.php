@@ -11,45 +11,45 @@ class RecursiveRelationshipsTest extends TestCase
     {
         $user = User::all()->first();
 
-        $this->assertCount(2, $user->children);
+        self::assertCount(2, $user->children);
+    }
+
+    public function testNestedChildren()
+    {
+        $user = User::all()->first();
+
+        self::assertArrayHasKey('nestedChildren', $user->nestedChildren()->first());
+    }
+
+    public function testNestedParents()
+    {
+        $user = User::all()->last();
+
+        self::assertArrayHasKey('nestedChildren', $user->nestedParents);
     }
 
     public function testRootHasParent()
     {
         $user = User::all()->first();
 
-        $this->assertEmpty($user->parent);
+        self::assertEmpty($user->parent);
     }
 
     public function testChildHasParent()
     {
         $user = User::all()->last();
 
-        $this->assertIsObject($user->parent);
-    }
-
-    public function testAncestors()
-    {
-        $user = User::where('user_id', '!=', null)->get()->last();
-
-        $this->assertCount(2, $user->ancestors());
-    }
-
-    public function testSiblings()
-    {
-        $user = User::all()->last();
-
-        $this->assertCount(2, $user->siblings);
+        self::assertIsObject($user->parent);
     }
 
     public function testHasChildren()
     {
-        $this->assertCount(6, User::hasChildren()->get());
+        self::assertCount(6, User::hasChildren()->get());
     }
 
     public function testHasParent()
     {
-        $this->assertCount(16, User::hasParent()->get());
+        self::assertCount(16, User::hasParent()->get());
     }
 
     public function testLeaf()
@@ -60,5 +60,26 @@ class RecursiveRelationshipsTest extends TestCase
     public function testRoot()
     {
         self::assertCount(2, User::root()->get());
+    }
+
+    public function testDescendents()
+    {
+        $user = User::all()->first();
+
+        self::assertCount(8, $user->descendents());
+    }
+
+    public function testAncestors()
+    {
+        $user = User::all()->last();
+
+        self::assertCount(2, $user->ancestors());
+    }
+
+    public function testSiblings()
+    {
+        $user = User::all()->last();
+
+        self::assertCount(2, $user->siblings());
     }
 }

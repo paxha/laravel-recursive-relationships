@@ -34,7 +34,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 ]);
 
                 /*
-                 * Each child has contains further three children
+                 * Each child has contains further 3 children
                  * Total 12
                  * Grand Total 18
                  * */

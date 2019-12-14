@@ -3,7 +3,6 @@
 namespace RecursiveRelationships\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use RecursiveRelationships\Relations\HasManySiblings;
 
 trait HasRecursiveRelationships
 {
@@ -33,11 +32,6 @@ trait HasRecursiveRelationships
     public function nestedParents()
     {
         return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('nestedParents');
-    }
-
-    public function siblings()
-    {
-        return new HasManySiblings((new self())->/* @scrutinizer ignore-call */ newQuery(), /* @scrutinizer ignore-type */ $this, $this->getParentKeyName(), $this->/* @scrutinizer ignore-call */ getKeyName());
     }
 
     public function scopeHasChildren(Builder $query)
@@ -73,6 +67,8 @@ trait HasRecursiveRelationships
         if ($this->children) {
             $this->collectDescendents($this->children);
         }
+
+        return collect($this->descendents);
     }
 
     private function collectDescendents($children)
@@ -100,5 +96,10 @@ trait HasRecursiveRelationships
         if ($parent->parent) {
             $this->collectAncestors($parent->parent);
         }
+    }
+
+    public function siblings()
+    {
+        return self::all()->where($this->getKeyName(), '!=', $this->{$this->getKeyName()})->where($this->getParentKeyName(), $this->{$this->getParentKeyName()});
     }
 }
