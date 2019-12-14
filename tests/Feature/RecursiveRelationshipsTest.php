@@ -11,69 +11,54 @@ class RecursiveRelationshipsTest extends TestCase
     {
         $user = User::all()->first();
 
-        $this->assertGreaterThan(1, $user->children()->count());
+        $this->assertCount(2, $user->children);
     }
 
-    public function testParent()
+    public function testRootHasParent()
     {
         $user = User::all()->first();
 
-        $child = $user->children()->first();
+        $this->assertEmpty($user->parent);
+    }
 
-        $this->assertEquals(1, $child->parent()->count());
+    public function testChildHasParent()
+    {
+        $user = User::all()->last();
+
+        $this->assertIsObject($user->parent);
     }
 
     public function testAncestors()
     {
         $user = User::where('user_id', '!=', null)->get()->last();
 
-        $this->assertCount(4, $user->ancestors());
+        $this->assertCount(2, $user->ancestors());
     }
 
     public function testSiblings()
     {
         $user = User::all()->last();
 
-        foreach ($user->siblings as $sibling) {
-            $this->assertEquals($user->user_id, $sibling->user_id);
-        }
+        $this->assertCount(2, $user->siblings);
     }
 
     public function testHasChildren()
     {
-        $users = User::hasChildren()->get();
-
-        foreach ($users as $user) {
-            $this->assertGreaterThan(1, $user->children()->count());
-        }
+        $this->assertCount(6, User::hasChildren()->get());
     }
 
     public function testHasParent()
     {
-        $users = User::hasParent()->get();
-
-        foreach ($users as $user) {
-            $this->assertEquals(1, $user->parent()->count());
-        }
+        $this->assertCount(16, User::hasParent()->get());
     }
 
     public function testLeaf()
     {
-        $users = User::leaf()->get();
-
-        foreach ($users as $user) {
-            $this->assertEquals(1, $user->parent()->count());
-            $this->assertEquals(0, $user->children()->count());
-        }
+        self::assertCount(12, User::leaf()->get());
     }
 
     public function testRoot()
     {
-        $users = User::root()->get();
-
-        foreach ($users as $user) {
-            $this->assertEquals(0, $user->parent()->count());
-            $this->assertGreaterThan(1, $user->children()->count());
-        }
+        self::assertCount(2, User::root()->get());
     }
 }

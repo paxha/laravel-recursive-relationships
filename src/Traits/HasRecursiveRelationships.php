@@ -7,7 +7,7 @@ use RecursiveRelationships\Relations\HasManySiblings;
 
 trait HasRecursiveRelationships
 {
-    public $ancestors = [];
+    private $descendents, $ancestors = [];
 
     public function getParentKeyName()
     {
@@ -32,23 +32,6 @@ trait HasRecursiveRelationships
     public function nestedParents()
     {
         return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('nestedParents');
-    }
-
-    public function ancestors()
-    {
-        if ($this->parent) {
-            $this->collectAncestors($this->parent);
-        }
-
-        return collect($this->ancestors);
-    }
-
-    private function collectAncestors($parent)
-    {
-        $this->ancestors[] = $parent;
-        if ($parent->parent) {
-            $this->collectAncestors($parent->parent);
-        }
     }
 
     public function siblings()
@@ -82,5 +65,39 @@ trait HasRecursiveRelationships
     public function scopeRoot(Builder $query)
     {
         return $query->whereNull($this->getParentKeyName());
+    }
+
+    public function descendents()
+    {
+        if ($this->children) {
+            $this->collectDescendents($this->children);
+        }
+    }
+
+    private function collectDescendents($children)
+    {
+        foreach ($children as $child) {
+            $this->descendents[] = $child;
+            if ($child->children) {
+                $this->collectDescendents($child->children);
+            }
+        }
+    }
+
+    public function ancestors()
+    {
+        if ($this->parent) {
+            $this->collectAncestors($this->parent);
+        }
+
+        return collect($this->ancestors);
+    }
+
+    private function collectAncestors($parent)
+    {
+        $this->ancestors[] = $parent;
+        if ($parent->parent) {
+            $this->collectAncestors($parent->parent);
+        }
     }
 }
