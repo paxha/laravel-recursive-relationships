@@ -18,6 +18,7 @@ This Laravel Eloquent extension provides recursive relationships using common ta
 -   [Getting Started](#getting-started)
 -   [Relationships](#relationships)
 -   [Scopes](#scopes)
+-   [Functions](#functions)
 
 ### Getting Started
 
@@ -57,11 +58,20 @@ class User extends Model
 
 The trait provides various relationships:
 
--   `ancestor()`: The model's recursive parents (nested objects).
 -   `children()`: The model's direct children.
--   `descendants()`: The model's recursive children (nested arrays).
+-   `nestedChildren()`: The model's nested children.
 -   `parent()`: The model's direct parent.
--   `siblings()`: The parent's other children.
+-   `nestedParent()`: The model's nested parent by object.
+
+```php
+$users = User::with('children')->get();
+
+$users = User::with('nestedChildren')->get();
+
+$users = User::with('parent')->get();
+
+$users = User::with('nestedParents')->get();
+```
 
 ### Scopes
 
@@ -80,6 +90,22 @@ $noRoots = User::hasParent()->get();
 $leaves = User::leaf()->get();
 
 $roots = User::root()->get();
+```
+
+### Functions
+
+The trait provides helper functions:
+
+-   `descendents()`: The model's all Children in single array.
+-   `ancestors()`: The model's all parents in single array.
+-   `siblings()`: The parent's other children.
+
+```php
+$descendents = User::find($id)->descendents();
+
+$ancestors = User::find($id)->ancestors();
+
+$siblings = User::find($id)->siblings();
 ```
 
 ## License

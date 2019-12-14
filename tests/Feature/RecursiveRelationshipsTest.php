@@ -11,69 +11,75 @@ class RecursiveRelationshipsTest extends TestCase
     {
         $user = User::all()->first();
 
-        $this->assertGreaterThan(1, $user->children()->count());
+        self::assertCount(2, $user->children);
     }
 
-    public function testParent()
+    public function testNestedChildren()
     {
         $user = User::all()->first();
 
-        $child = $user->children()->first();
+        self::assertArrayHasKey('nestedChildren', $user->nestedChildren()->first());
+    }
 
-        $this->assertEquals(1, $child->parent()->count());
+    public function testNestedParents()
+    {
+        $user = User::all()->last();
+
+        self::assertArrayHasKey('nestedChildren', $user->nestedParents);
+    }
+
+    public function testRootHasParent()
+    {
+        $user = User::all()->first();
+
+        self::assertEmpty($user->parent);
+    }
+
+    public function testChildHasParent()
+    {
+        $user = User::all()->last();
+
+        self::assertIsObject($user->parent);
+    }
+
+    public function testHasChildren()
+    {
+        self::assertCount(6, User::hasChildren()->get());
+    }
+
+    public function testHasParent()
+    {
+        self::assertCount(16, User::hasParent()->get());
+    }
+
+    public function testLeaf()
+    {
+        self::assertCount(12, User::leaf()->get());
+    }
+
+    public function testRoot()
+    {
+        self::assertCount(2, User::root()->get());
+    }
+
+    public function testDescendents()
+    {
+        $user = User::all()->first();
+
+        self::assertCount(8, $user->descendents());
     }
 
     public function testAncestors()
     {
-        $user = User::where('user_id', '!=', null)->get()->last();
+        $user = User::all()->last();
 
-        $this->assertCount(4, $user->ancestors());
+        self::assertCount(2, $user->ancestors());
     }
 
     public function testSiblings()
     {
         $user = User::all()->last();
 
-        foreach ($user->siblings as $sibling) {
-            $this->assertEquals($user->user_id, $sibling->user_id);
-        }
-    }
-
-    public function testHasChildren()
-    {
-        $users = User::hasChildren()->get();
-
-        foreach ($users as $user) {
-            $this->assertGreaterThan(1, $user->children()->count());
-        }
-    }
-
-    public function testHasParent()
-    {
-        $users = User::hasParent()->get();
-
-        foreach ($users as $user) {
-            $this->assertEquals(1, $user->parent()->count());
-        }
-    }
-
-    public function testLeaf()
-    {
-        $users = User::leaf()->get();
-
-        foreach ($users as $user) {
-            $this->assertEquals(1, $user->parent()->count());
-            $this->assertEquals(0, $user->children()->count());
-        }
-    }
-
-    public function testRoot()
-    {
-        $users = User::root()->get();
-
-        foreach ($users as $user) {
-            $this->assertEquals(0, $user->parent()->count());
-            $this->assertGreaterThan(1, $user->children()->count());
-        }
+        self::assertCount(2, $user->siblings());
     }
 }

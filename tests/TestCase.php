@@ -20,26 +20,28 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function seeds()
     {
+        /*2 Root Users*/
         factory(User::class, 2)->create()->each(function ($user) {
             $faker = Faker::create();
+
+            /*
+             * Each Root Has 2 Children
+             * Total 4
+             * */
             for ($index = 1; $index <= 2; $index++) {
                 $u = $user->children()->create([
                     'name' => $faker->name,
                 ]);
-                for ($index1 = 1; $index1 <= 2; $index1++) {
-                    $u1 = $u->children()->create([
+
+                /*
+                 * Each child has contains further 3 children
+                 * Total 12
+                 * Grand Total 18
+                 * */
+                for ($index1 = 1; $index1 <= 3; $index1++) {
+                    $u->children()->create([
                         'name' => $faker->name,
                     ]);
-                    for ($index2 = 1; $index2 <= 2; $index2++) {
-                        $u2 = $u1->children()->create([
-                            'name' => $faker->name,
-                        ]);
-                        for ($index3 = 1; $index3 <= 3; $index3++) {
-                            $u2->children()->create([
-                                'name' => $faker->name,
-                            ]);
-                        }
-                    }
                 }
             }
         });

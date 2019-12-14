@@ -3,11 +3,11 @@
 namespace RecursiveRelationships\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use RecursiveRelationships\Relations\HasManySiblings;
 
 trait HasRecursiveRelationships
 {
-    public $ancestors = [];
+    private $descendents = [];
+    private $ancestors = [];
 
     public function getParentKeyName()
     {
@@ -32,28 +32,6 @@ trait HasRecursiveRelationships
     public function nestedParents()
     {
         return $this->/* @scrutinizer ignore-call */ belongsTo(self::class, $this->getParentKeyName())->with('nestedParents');
-    }
-
-    public function ancestors()
-    {
-        if ($this->parent) {
-            $this->collectAncestors($this->parent);
-        }
-
-        return collect($this->ancestors);
-    }
-
-    private function collectAncestors($parent)
-    {
-        $this->ancestors[] = $parent;
-        if ($parent->parent) {
-            $this->collectAncestors($parent->parent);
-        }
-    }
-
-    public function siblings()
-    {
-        return new HasManySiblings((new self())->/* @scrutinizer ignore-call */ newQuery(), /* @scrutinizer ignore-type */ $this, $this->getParentKeyName(), $this->/* @scrutinizer ignore-call */ getKeyName());
     }
 
     public function scopeHasChildren(Builder $query)
@@ -82,5 +60,46 @@ trait HasRecursiveRelationships
     public function scopeRoot(Builder $query)
     {
         return $query->whereNull($this->getParentKeyName());
+    }
+
+    public function descendents()
+    {
+        if ($this->children) {
+            $this->collectDescendents($this->children);
+        }
+
+        return collect($this->descendents);
+    }
+
+    private function collectDescendents($children)
+    {
+        foreach ($children as $child) {
+            $this->descendents[] = $child;
+            if ($child->children) {
+                $this->collectDescendents($child->children);
+            }
+        }
+    }
+
+    public function ancestors()
+    {
+        if ($this->parent) {
+            $this->collectAncestors($this->parent);
+        }
+
+        return collect($this->ancestors);
+    }
+
+    private function collectAncestors($parent)
+    {
+        $this->ancestors[] = $parent;
+        if ($parent->parent) {
+            $this->collectAncestors($parent->parent);
+        }
+    }
+
+    public function siblings()
+    {
+        return self::all()->where($this->getKeyName(), '!=', $this->{$this->getKeyName()})->where($this->getParentKeyName(), $this->{$this->getParentKeyName()});
     }
 }
