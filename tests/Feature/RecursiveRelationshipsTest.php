@@ -55,10 +55,7 @@ class RecursiveRelationshipsTest extends TestCase
     {
         $user = User::where('user_id', '!=', null)->get()->last();
 
-        dd($user->ancestors());
-        if ($user->ancestors()) {
-            $this->testAncestorRecursive($user->ancestor);
-        }
+        $this->assertCount(4, $user->ancestors());
     }
 
     private function testAncestorRecursive($ancestor)
