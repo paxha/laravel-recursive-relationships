@@ -4,6 +4,7 @@
     "type": "laravel",
     "license": "MIT",
     "keywords": [
+        "laravel",
         "laravel library",
         "laravel recursive relationships",
         "recursive relationships",
